@@ -1,14 +1,2 @@
-*.img
-/build
-/build-mw
 /build-gnu
-CMakeFiles/
-Makefile
-cmake_install.cmake
-image_gen_linux/*.bin
-image_gen_linux/layout.xml
-image_gen_linux/edge-impulse-standalone-himax.*
-image_gen_linux/app.*
-edge-impulse-sdk/
-model-parameters/
-tflite-model/
+
