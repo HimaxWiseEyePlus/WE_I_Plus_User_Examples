@@ -73,7 +73,22 @@ sudo docker run --rm -it -v $PWD:/app himax-build-gnu /bin/bash -c "cd build-gnu
 ```
 sudo docker run --rm -it -v $PWD:/app:delegated himax-build-gnu /bin/bash -c "cd build-gnu && make -j && sh ../make-image.sh GNU"
 ```
-
+If you face 'Permission denied' error, follow these steps: <br>
+  Step1: Use `cd image_gen_linux` to change the directory. <br>
+  Step2: Type `ls -l` command to see status of files.
+  ![](images/image_gen_linux_permission.jpg)
+  Note that `image_gen_gnu`, `image_gen` and `sign_tool` files need chmod +x permissions.  <br>
+  Step3: If any of these files don't have the required permission assign them by 
+  ```
+  chmod u+x image_gen_gnu
+  ```
+  ```
+  chmod u+x image_gen
+  ```
+  ```
+  chmod u+x sign_tool
+  ```
+  Step4: Come back one directory by `cd ..` command and then run the previous Docker commands.
 ## Flash Image
 Flash image name will be `out.img` and will be located in `image_gen_linux` of the directory.
 ![](images/flash.jpg)
