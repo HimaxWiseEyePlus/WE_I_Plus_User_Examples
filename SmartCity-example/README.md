@@ -19,7 +19,7 @@ Edge-Impulse based City Traffic Light application using Himax WE-I Plus Board, w
 | Blue line   |  SDA  | J3 Pin 6 |
 
 ## Self Trained model
-`Note`: To deploy `Already Compiled Application` skip to [Flash Image](https://github.com/JayeshRajam/WE_I_Plus_User_Examples/tree/main/SmartCity-example#flash-image) section of this file.
+`Note`: To deploy `Already Compiled Application` skip to [Flash Image](https://github.com/HimaxWiseEyePlus/WE_I_Plus_User_Examples/tree/main/SmartCity-example#flash-image) section of this file.
 
 Please check [here](https://docs.edgeimpulse.com/docs) to build your own Edge Impulse project. The following shows the outline of the Impulse design in this project.
 - Input Image data
