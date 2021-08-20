@@ -3,7 +3,7 @@ The Smart Agriculture Application includes use of the Himax WE-I Plus Board with
 
 ## Prerequisites
   - [Himax WE-I Plus EVB Endpoint AI Development Board](https://www.sparkfun.com/products/17256)
-  - LoRa - REYAX RYLR896 [[ AT COMMAND GUIDE ]](https://reyax.com/wp-content/uploads/2020/01/Lora-AT-Command-RYLR40x_RYLR89x_EN.pdf)
+  - [LoRa - REYAX RYLR896](https://reyax.com/products/rylr896/) [[ AT COMMAND GUIDE ]](https://reyax.com/wp-content/uploads/2020/01/Lora-AT-Command-RYLR40x_RYLR89x_EN.pdf)
   - Either of the sensor boards 
     - [SparkFun Environmental Combo Breakout - CCS811/BME280 (Qwiic)](https://www.sparkfun.com/products/14348)
     - [SparkFun (SparkX) Qwiic Pressure/Humidity/Temp (PHT) Sensor - MS8607](https://www.sparkfun.com/products/16298)\
