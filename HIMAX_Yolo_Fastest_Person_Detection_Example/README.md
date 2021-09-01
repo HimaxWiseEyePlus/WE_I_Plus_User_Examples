@@ -29,6 +29,7 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
     |_ LICENSE
     |_ Makefile
     |_ memory.lcf
+    |_ memory.x
     |_ README.md
     |_ tensorflow
     |_ third_party
