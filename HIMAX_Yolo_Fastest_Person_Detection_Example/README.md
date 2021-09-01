@@ -23,11 +23,17 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
   - Please put your own model and rename it to `yolo.tflite`, you can also download from [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest/blob/master/ModelZoo/yolo-fastest-1.1_160_person/yolo-fastest-1.1_160_person.tflite). Your folder structure should look like this:
     ```
     WE_I_Plus_User_Examples/HIMAX_Yolo_Fastest_Person_Detection_Example/
+    |_ himax_we1_sdk
+    |_ image_gen_linux
     |_ images
+    |_ LICENSE
     |_ Makefile
+    |_ memory.lcf
     |_ README.md
-    |_ yolo_fastest
+    |_ tensorflow
+    |_ third_party
     |_ yolo.tflite
+    |_ yolo_fastest
     ```
   - Example with reading model from flash of HIMAX SDK, detail device initialization will be done by `hx_drv_flash_init()` and `hx_drv_flash_get_Model_address()` .
     - You should initial flash first. Then you can get the right model address.  
