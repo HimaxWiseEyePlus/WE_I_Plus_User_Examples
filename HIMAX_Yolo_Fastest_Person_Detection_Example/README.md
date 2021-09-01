@@ -25,7 +25,6 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
     WE_I_Plus_User_Examples/HIMAX_Yolo_Fastest_Person_Detection_Example/
     |_ images
     |_ Makefile
-    |_ PC_TOOL
     |_ README.md
     |_ yolo_fastest
     |_ yolo.tflite
@@ -48,7 +47,7 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
 
 
   - You can see your detect results with bounding box on the PC TOOL.
-    - Before you click `PC_TOOL`, you can download [here] (https://github.com/HimaxWiseEyePlus/WE_I_Plus_User_Examples/releases/download/v1.0/PC_TOOL) , please key-in following command on console.
+    - Before you click `PC_TOOL`, you can download [here](https://github.com/HimaxWiseEyePlus/WE_I_Plus_User_Examples/releases/download/v1.0/PC_TOOL), please key-in following command on console.
       ```bash
       chmod 777 PC_TOOL
       ```

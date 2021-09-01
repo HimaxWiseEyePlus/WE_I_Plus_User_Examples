@@ -1,6 +1,0 @@
-make.exe --dry-run --keep-going --print-directory
-make: Entering directory '/cygdrive/c/Users/904289/Desktop/himax_tflm-master_yolo_fastest_relu6_test_mem'
-make: Leaving directory '/cygdrive/c/Users/904289/Desktop/himax_tflm-master_yolo_fastest_relu6_test_mem'
- 
-Makefile:385: *** "please specific example=".  Stop.
- 
