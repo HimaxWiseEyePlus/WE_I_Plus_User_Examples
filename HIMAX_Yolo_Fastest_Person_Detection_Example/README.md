@@ -4,7 +4,7 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
 - Prerequisites
   - This example will supports GNU and Metaware Development Toolkit. Please check the Development Toolkit chapter [here](https://github.com/HimaxWiseEyePlus/himax_tflm#prerequisites) to prepare the environment to build the example.
 - Build the example and flash image.
-  - Download related third party data (only need to download once)
+  - Download related third party and library data (only need to download once)
 
     ```
     make download

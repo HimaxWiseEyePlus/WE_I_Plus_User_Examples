@@ -25,6 +25,10 @@ LIB_LINK = https://www.himax.com.tw/we-i/himax_tflu_tree/third_party_lib_v03.zip
 LIB_LOC = third_party/
 LIB_NAME = lib.zip
 
+TFLM_LIB_LINK = https://github.com/HimaxWiseEyePlus/himax_tflm/archive/refs/tags/v1.0.zip
+TFLM_LIB_LOC = .
+TFLM_LIB_NAME = tensorflow_lib.zip
+HIMAX_TFLM_LIB_LOC = himax_tflm-1.0
 
 SDK_LINK = https://www.himax.com.tw/we-i/himax_we1_sdk_v19.zip
 SDK_LOC = .
@@ -394,14 +398,21 @@ clean:
 	
 download:
 	@echo 'downloading'
+	@$(DL) $(TFLM_LIB_LINK)  -o $(TFLM_LIB_NAME) 
 	@$(DL) $(LIB_LINK)  -o $(LIB_NAME) 
 	@$(DL) $(SDK_LINK)  -o $(SDK_NAME)
 	@$(DL) $(TOOL_LINK)  -o $(TOOL_NAME)
 	@$(DL) $(DEPEND_LINK)  -o $(DEPEND_NAME)
+	@$(UNZIP) -o $(TFLM_LIB_NAME) -d $(TFLM_LIB_LOC)
 	@$(UNZIP) -o $(LIB_NAME) -d $(LIB_LOC)
 	@$(UNZIP) -o $(SDK_NAME) -d $(SDK_LOC) 
 	@$(UNZIP) -o $(TOOL_NAME) -d $(TOOL_LOC)	
 	@$(UNZIP) -o $(DEPEND_NAME) -d $(DEPEND_LOC)
+	cp -r $(HIMAX_TFLM_LIB_LOC)/tensorflow  tensorflow
+	cp $(HIMAX_TFLM_LIB_LOC)/memory.lcf memory.lcf
+	cp $(HIMAX_TFLM_LIB_LOC)/memory.x memory.x
+	@$(RM) $(HIMAX_TFLM_LIB_LOC)
+	@$(RM) $(TFLM_LIB_NAME)
 	@$(RM) $(LIB_NAME)
 	@$(RM) $(SDK_NAME)
 	@$(RM) $(TOOL_NAME)	
