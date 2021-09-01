@@ -10,11 +10,11 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
     make download
     ```
 
-  - Default building toolchain in makefile is Metaware Development toolkit, if you are trying to build example with GNU toolkit. please change the `ARC_TOOLCHAIN` define in `Makefile` like this
+  - Default building toolchain in makefile is GNU toolkit, if you are trying to build example with Metaware Development toolkit. please change the `ARC_TOOLCHAIN` define in `Makefile` like this
 
     ```
-    #ARC_TOOLCHAIN ?= mwdt
-    ARC_TOOLCHAIN ?= gnu
+    ARC_TOOLCHAIN ?= mwdt
+    #ARC_TOOLCHAIN ?= gnu
     ```
   
   - Train your own yolo-fastest model
