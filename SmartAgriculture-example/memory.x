@@ -1,17 +1,19 @@
 /* SYSTEM memory regions indicate where external memory might be located.
-   The TCF has no specific knowledge of whether SYSTEM regions contain 
+   The TCF has no specific knowledge of whether SYSTEM regions contain
    external memory or not.
    CCMWRAP memory regions indicate unusable portions of the address space
    due to CCM memory wrapping into upper addresses beyond its size
 */
 
 MEMORY {
-    ICCM0   : ORIGIN = 0x00000000, LENGTH = 0x00010000
-    ICCM1   : ORIGIN = 0x10000000, LENGTH = 0x00050000
-    SYSTEM0 : ORIGIN = 0x20020800, LENGTH = 0x000E9AF0
-    DCCM    : ORIGIN = 0x80000000, LENGTH = 0x00040000
-    XCCM    : ORIGIN = 0x90000000, LENGTH = 0x00008000
-    YCCM    : ORIGIN = 0xa0000000, LENGTH = 0x00008000
+	ICCM0   : ORIGIN = 0x00000000, LENGTH = 0x00010000
+	ICCM1   : ORIGIN = 0x10000000, LENGTH = 0x00050000
+	BOOT	: ORIGIN = 0x20000000, LENGTH = 0x00020800
+	SYSTEM0 : ORIGIN = 0x20020800, LENGTH = 0x0015f800
+	DCCM    : ORIGIN = 0x80000000, LENGTH = 0x0003E000
+    .stack	: ORIGIN = 0x8003E000, LENGTH = 0x00002000
+	XCCM    : ORIGIN = 0x90000000, LENGTH = 0x00008000
+	YCCM    : ORIGIN = 0xa0000000, LENGTH = 0x00008000
 }
 
 REGION_ALIAS("startup", ICCM1)
@@ -31,19 +33,19 @@ SECTIONS {
         *(.init_bootstrap)
     } > startup
 
-    .vector : 
+    .vector :
     {
         . = ALIGN(1024);
         *(.vector)
     } > startup
 
     /* Read-only sections, merged into text segment: */
-    .hash          : { *(.hash)		}
-    .dynsym        : { *(.dynsym)		}
-    .dynstr        : { *(.dynstr)		}
-    .gnu.version   : { *(.gnu.version)	}
-    .gnu.version_d   : { *(.gnu.version_d)	}
-    .gnu.version_r   : { *(.gnu.version_r)	}
+    .hash          : { *(.hash)         }
+    .dynsym        : { *(.dynsym)       }
+    .dynstr        : { *(.dynstr)       }
+    .gnu.version   : { *(.gnu.version)  }
+    .gnu.version_d   : { *(.gnu.version_d)  }
+    .gnu.version_r   : { *(.gnu.version_r)  }
     .rel.init       : { *(.rel.init) }
     .rela.init      : { *(.rela.init) }
     .rel.text       : { *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*) }
@@ -54,10 +56,10 @@ SECTIONS {
     .rela.rodata    : { *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*) }
     .rel.data       : { *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*) }
     .rela.data      : { *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*) }
-    .rel.tdata	  : { *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*) }
-    .rela.tdata	  : { *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*) }
-    .rel.tbss	  : { *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*) }
-    .rela.tbss	  : { *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*) }
+    .rel.tdata    : { *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*) }
+    .rela.tdata       : { *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*) }
+    .rel.tbss     : { *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*) }
+    .rela.tbss    : { *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*) }
     .rel.ctors      : { *(.rel.ctors) }
     .rela.ctors     : { *(.rela.ctors) }
     .rel.dtors      : { *(.rel.dtors) }
@@ -74,7 +76,7 @@ SECTIONS {
     .rela.sbss2     : { *(.rela.sbss2 .rela.sbss2.* .rela.gnu.linkonce.sb2.*) }
     .rel.bss        : { *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*) }
     .rela.bss       : { *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*) }
-    
+
     .text           :
     {
         . = ALIGN(4);
@@ -97,7 +99,7 @@ SECTIONS {
         PROVIDE (_etext = .);
         PROVIDE (etext = .);
         PROVIDE (_e_text = .);
-    }  > text 
+    }  > text
 
     .jcr   :
     {
@@ -113,7 +115,7 @@ SECTIONS {
     {
         *(.gcc_except_table) *(.gcc_except_table.*)
     } > text
-    
+
     .plt   :
     {
         *(.plt)
@@ -125,7 +127,14 @@ SECTIONS {
         jlitab*.o:(.jlitab*) *(.jlitab*)
 
     } > text
-    
+
+    .ram_memory :
+    {
+        . = ALIGN(8);
+        *(.ram_memory*)
+    } > BOOT
+
+
     .read_only_data   :
     {
         PROVIDE (_f_rodata = .);
@@ -134,9 +143,13 @@ SECTIONS {
         PROVIDE (_e_rodata = .);
     } > readonly
 
-        
+    .tensor_arena :
+    {
+        .  = ALIGN(16);
+        KEEP(*(.tensor_arena*))
+    } > readonly
 
-    .data	  :
+    .data     :
     {
         /* Start of the data section image in ROM.  */
         PROVIDE (__data_image = .);
@@ -147,7 +160,7 @@ SECTIONS {
         KEEP (*(.data))
         *(.data.* .gnu.linkonce.d.*)
         SORT(CONSTRUCTORS)
-    	/* gcc uses crtbegin.o to find the start of
+        /* gcc uses crtbegin.o to find the start of
         the constructors, so we make sure it is
         first.  Because this is a wildcard, it
         doesn't matter if the user does not
@@ -170,9 +183,9 @@ SECTIONS {
         KEEP (*(.dtors))
     }  > data
 
-    .got            : 
-    { 
-        *(.got.plt) *(.got) 
+    .got            :
+    {
+        *(.got.plt) *(.got)
     }  > data
 
 
@@ -186,8 +199,8 @@ SECTIONS {
         *(.sdata .sdata.* .gnu.linkonce.s.*)
         _edata  =  .;
         PROVIDE (edata = .);
-        
-        *(.sdata2 .sdata2.* .gnu.linkonce.s2.*) 
+
+        *(.sdata2 .sdata2.* .gnu.linkonce.s2.*)
         /* Global data not cleared after reset.  */
         *(.noinit*)
         . = ALIGN(32 / 8);
@@ -202,14 +215,9 @@ SECTIONS {
         *(.scommon)
         PROVIDE (__sbss_end = .);
         PROVIDE (___sbss_end = .);
-        *(.sbss2 .sbss2.* .gnu.linkonce.sb2.*)   
+        *(.sbss2 .sbss2.* .gnu.linkonce.sb2.*)
     }  > sdata
-    
-    .tensor           :
-    {
-        *(.tensor_arena*) 
-    }  > sdata
-    
+
     .bss_all           :
     {
         PROVIDE (_f_bss = .) ;
@@ -224,32 +232,33 @@ SECTIONS {
         PROVIDE (end = .);
 
         PROVIDE (_e_bss = .) ;
-    }  > sdata
-    
+    }  > DCCM
 
     .Zdata :
     {
         . = ALIGN(16);
-        *(.Zdata*)
+        KEEP (*(.Zdata*))
         PROVIDE (__start_heap = .) ;
         PROVIDE (_f_heap = .) ;
     }  > DCCM
 
     .Xdata :
     {
-        *(.Xdata*)
+        . = ALIGN(4);
+        KEEP (*(.Xdata*))
     }  > XCCM
-    
+
     .Ydata :
     {
-        *(.Ydata*)
+        . = ALIGN(4);
+        KEEP (*(.Ydata*))
     }  > YCCM
-    
-    PROVIDE (__stack_top = (ORIGIN (DCCM) + LENGTH (DCCM) - 1) & -4);
-    PROVIDE (__end_heap = ORIGIN (DCCM) + LENGTH (DCCM) - 1); 
-    
+
+    PROVIDE (__stack_top = (ORIGIN (.stack) + LENGTH (.stack) - 1) & -4);
+    PROVIDE (__end_heap = ORIGIN (.stack));
+
     PROVIDE (_e_stack = __stack_top);
-    PROVIDE (_e_heap = __end_heap); 
+    PROVIDE (_e_heap = __end_heap);
     PROVIDE (_load_addr_text = _f_text);
     PROVIDE (_load_addr_rodata = _f_rodata);
 
@@ -294,7 +303,5 @@ SECTIONS {
     .debug_macro    0 : { *(.debug_macro) }
     .debug_addr     0 : { *(.debug_addr) }
     /* ARC Extension Sections */
-    .arcextmap	  0 : { *(.arcextmap.*) }    
+    .arcextmap    0 : { *(.arcextmap.*) }
 }
-
-
