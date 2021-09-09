@@ -208,6 +208,8 @@ CXXFLAGS+= \
 -Hnocopyr \
 -Hpurge \
 -Hcl \
+-Hcrt_fast_memcpy \
+-Hcrt_fast_memset \
 -fslp-vectorize-aggressive \
 -ffunction-sections \
 -fdata-sections \
@@ -239,6 +241,8 @@ CCFLAGS+= \
 -Hnocopyr \
 -Hpurge \
 -Hcl \
+-Hcrt_fast_memcpy \
+-Hcrt_fast_memset \
 -tcf=$(SDK_PATH)/arcem9d_wei_r16.tcf \
 -fslp-vectorize-aggressive \
 -ffunction-sections \
