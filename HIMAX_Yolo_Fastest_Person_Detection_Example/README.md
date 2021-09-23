@@ -56,7 +56,7 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
             ```
             //#define COCO_DATASET 1
             ```
-            to make it run the below anchor parameters, which is analyzed by our own HIMAX dataset.
+            to make it run the below anchor parameters, which is analyzed the distribution of anchors by our own HIMAX dataset.
             ```c++
             float anchor1[] = {19, 72, 34, 103, 73, 109};
             float anchor2[] = {6, 25, 12, 43, 34, 33};
