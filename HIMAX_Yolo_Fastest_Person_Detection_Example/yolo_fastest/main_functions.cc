@@ -11,6 +11,7 @@
 #include "hx_drv_tflm.h" 
 #define MAX_TRACKED_ALGO_RES  10
 #define COLOR_DEPTH	1 // 8bit per pixel FU
+#define COCO_DATASET 1
 typedef enum
 {
 	MONO_FRAME=0,
@@ -500,8 +501,13 @@ void loop() {
 		
 
 	branch* branchs = (branch*)calloc(num_branch, sizeof(branch));
-	float anchor1[] = {32, 93,  62 ,106 , 113 ,132};
-	float anchor2[] = {4,  9,  10, 25,  23, 49};
+    #ifdef COCO_DATASET
+        float anchor1[] = {32, 93, 62,106, 113, 132};
+        float anchor2[] = {4, 9, 10, 25, 23, 49};
+    #else
+        float anchor1[] = {19, 72, 34, 103, 73, 109};
+	    float anchor2[] = {6, 25, 12, 43, 34, 33};
+    #endif
 
 	branchs[0] = create_brach(5, 3, anchor1, output[0]->data.int8, output[0]->bytes, ((TfLiteAffineQuantization*)(output[0]->quantization.params))->scale->data[0], ((TfLiteAffineQuantization*)(output[0]->quantization.params))->zero_point->data[0]);
 		

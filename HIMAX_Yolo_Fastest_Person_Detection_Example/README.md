@@ -18,11 +18,13 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
     ```
   
   - Train your own yolo-fastest model
-    - Model used by this example is training with COCO dataset, please take a look [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest) about training detail.
+    - Model default used by this example is training with COCO dataset, please take a look [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest) about training detail.
+    - The other pre-trained model, `himax_dataset_yolo.tflite`, is trained by our own HIMAX dataset, please take a look [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest#himax-pretrained-model) for more detail.
 
-  - Please put your own model and rename it to `yolo.tflite`, you can also download from [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest/blob/master/ModelZoo/yolo-fastest-1.1_160_person/yolo-fastest-1.1_160_person.tflite). Your folder structure should look like this:
+  - Please put your own model which is trained by COCO dataset and rename it to `yolo.tflite`, and you can also download from [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest/raw/master/ModelZoo/yolo-fastest-1.1_160_person/yolo-fastest-1.1_160_person.tflite). The other pre-trained model, `himax_dataset_yolo.tflite`, which is trained by our own HIMAX dataset, and you can also download from [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest/raw/master/ModelZoo/yolo-fastest-1.1_160_person/yolo-fastest-1.1_160_person.tflite). Your folder structure should look like this:
     ```
     WE_I_Plus_User_Examples/HIMAX_Yolo_Fastest_Person_Detection_Example/
+    |_ himax_dataset_yolo.tflite
     |_ himax_we1_sdk
     |_ image_gen_linux
     |_ images
@@ -39,11 +41,36 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
   - Example with reading model from flash of HIMAX SDK, detail device initialization will be done by `hx_drv_flash_init()` and `hx_drv_flash_get_Model_address()` .
     - You should initial flash first. Then you can get the right model address.  
     - You can simply call them to initial flash and get model addess to retrieve the model data from flash.
-  - Build this example, just key-in following command on the console. Flash image name will be `yolo*.img`.
-    ```bash
-    make yolo
-    make flash example=yolo
-    ```
+  - Build the example with
+      - Model trained by COCO dataset:
+
+        We default use the model , `yolo.tflite` , trained by COCO dataset, just key-in following command on the console. Flash image name will be `yolo*.img`.
+        ```bash
+        make yolo
+        make flash example=yolo
+        ```
+      - Model trained by HIMAX dataset: 
+        
+        If you want to build the example with `himax_dataset_yolo.tflite`.
+          - Change the define in `yolo_fastest/main_fuction.cc` line 14 
+            ```
+            //#define COCO_DATASET 1
+            ```
+            to make it run the below anchor parameters, which is analyzed by our own HIMAX dataset.
+            ```c++
+            float anchor1[] = {19, 72, 34, 103, 73, 109};
+            float anchor2[] = {6, 25, 12, 43, 34, 33};
+            ```
+          - Change the define in Makefile
+            ```
+            #YOLO_DATASET ?= coco
+            YOLO_DATASET ?= himax
+            ```
+          - Just key-in following command on the console. Flash image name will be `yolo*.img`.
+            ```bash
+            make yolo
+            make flash example=yolo
+            ```
   - Then, you should update the application, `yolo*.img` , in the flash.
     - Flash Image Update at Linux Environment [here](https://github.com/HimaxWiseEyePlus/bsp_tflu/tree/master/HIMAX_WE1_EVB_user_guide#flash-image-update-at-linux-environment)
 - After above steps, update `yolo*.img` to HIMAX WE1 EVB. After get data from sensor, we can display them on the console and see the images with bounding box on the PC TOOL.

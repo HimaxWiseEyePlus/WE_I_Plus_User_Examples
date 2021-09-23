@@ -3,6 +3,8 @@
 #=============================================================
 #ARC_TOOLCHAIN ?= mwdt
 ARC_TOOLCHAIN ?= gnu
+YOLO_DATASET ?= coco
+#YOLO_DATASET ?= himax
 
 ifeq ($(ARC_TOOLCHAIN), mwdt)
 	CC = ccac
@@ -425,24 +427,43 @@ download:
 ifeq ($(ARC_TOOLCHAIN), mwdt)
 flash:
 ifdef example
+ifeq ($(YOLO_DATASET), coco)
 	@export PATH=$(shell pwd)/$(GEN_TOOL_DIR)/:$$PATH && \
 	cp $(example).elf $(example).map $(example).tflite $(GEN_TOOL_DIR) && \
 	cd $(GEN_TOOL_DIR) && \
 	$(GEN_TOOL_NAME) -e $(example).elf -t $(example).tflite -m $(example).map -o $(example).img -s 1024 && \
 	cp $(example)*.img .. && \
 	rm $(example).elf $(example).map $(example)*.img $(example).tflite
+
+else ifeq ($(YOLO_DATASET), himax)
+	@export PATH=$(shell pwd)/$(GEN_TOOL_DIR)/:$$PATH && \
+	cp $(example).elf $(example).map himax_dataset_$(example).tflite $(GEN_TOOL_DIR) && \
+	cd $(GEN_TOOL_DIR) && \
+	$(GEN_TOOL_NAME) -e $(example).elf -t himax_dataset_$(example).tflite -m $(example).map -o $(example).img -s 1024 && \
+	cp $(example)*.img .. && \
+	rm $(example).elf $(example).map $(example)*.img himax_dataset_$(example).tflite
+endif
 else
 	$(error "please specific example=")
 endif
 else ifeq ($(ARC_TOOLCHAIN), gnu)
 flash:
 ifdef example
+ifeq ($(YOLO_DATASET), coco)
 	@export PATH=$(shell pwd)/$(GEN_TOOL_DIR)/:$$PATH && \
 	cp $(example).elf $(example).tflite $(GEN_TOOL_DIR) && \
 	cd $(GEN_TOOL_DIR) && \
 	$(GEN_TOOL_NAME) -e $(example).elf -t $(example).tflite -s 1024 -o $(example).img && \
 	cp $(example)*.img .. && \
 	rm $(example).elf $(example)*.img $(example).tflite
+else ifeq ($(YOLO_DATASET), himax)
+	@export PATH=$(shell pwd)/$(GEN_TOOL_DIR)/:$$PATH && \
+	cp $(example).elf himax_dataset_$(example).tflite $(GEN_TOOL_DIR) && \
+	cd $(GEN_TOOL_DIR) && \
+	$(GEN_TOOL_NAME) -e $(example).elf -t himax_dataset_$(example).tflite -s 1024 -o $(example).img && \
+	cp $(example)*.img .. && \
+	rm $(example).elf $(example)*.img himax_dataset_$(example).tflite
+endif
 else
 	$(error "please specific example=")
 endif
