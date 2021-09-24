@@ -19,12 +19,12 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
   
   - Train your own yolo-fastest model
     - Model default used by this example is training with COCO dataset, please take a look [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest) about training detail.
-    - The other pre-trained model, `yolo-fastest-1.1_160_person_himax.tflite`, is trained by our own HIMAX dataset, please take a look [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest#himax-pretrained-model) for more detail.
+    - The other pre-trained model, `yolo-fastest-1_1_160_person_himax.tflite`, is trained by our own HIMAX dataset, please take a look [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest#himax-pretrained-model) for more detail.
 
-  - Please put your own model which is trained by COCO dataset and rename it to `yolo.tflite`, and you can also download from [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest/raw/master/ModelZoo/yolo-fastest-1.1_160_person/yolo-fastest-1.1_160_person.tflite). The other pre-trained model, `yolo-fastest-1.1_160_person_himax.tflite`, which is trained by our own HIMAX dataset, and you can also download from [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest/raw/master/ModelZoo/yolo-fastest-1.1_160_person/yolo-fastest-1.1_160_person_himax.tflite). Your folder structure should look like this:
+  - Please put your own model which is trained by COCO dataset and rename it to `yolo.tflite`, and you can also download from [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest/raw/master/ModelZoo/yolo-fastest-1.1_160_person/yolo-fastest-1.1_160_person.tflite). The other pre-trained model, `yolo-fastest-1_1_160_person_himax.tflite`, which is trained by our own HIMAX dataset, and you can also download from [here](https://github.com/HimaxWiseEyePlus/Yolo-Fastest/raw/master/ModelZoo/yolo-fastest-1.1_160_person/yolo-fastest-1_1_160_person_himax.tflite). Your folder structure should look like this:
     ```
     WE_I_Plus_User_Examples/HIMAX_Yolo_Fastest_Person_Detection_Example/
-    |_ yolo-fastest-1.1_160_person_himax.tflite
+    |_ yolo-fastest-1_1_160_person_himax.tflite
     |_ himax_we1_sdk
     |_ image_gen_linux
     |_ images
@@ -51,7 +51,7 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
         ```
       - Model trained by HIMAX dataset: 
         
-        If you want to build the example with `yolo-fastest-1.1_160_person_himax.tflite`.
+        If you want to build the example with `yolo-fastest-1_1_160_person_himax.tflite`.
           - Change the define in `yolo_fastest/main_fuction.cc` line 14 
             ```
             //#define COCO_DATASET 1

@@ -458,11 +458,11 @@ ifeq ($(YOLO_DATASET), coco)
 	rm $(example).elf $(example)*.img $(example).tflite
 else ifeq ($(YOLO_DATASET), himax)
 	@export PATH=$(shell pwd)/$(GEN_TOOL_DIR)/:$$PATH && \
-	cp $(example).elf yolo-fastest-1.1_160_person_himax.tflite $(GEN_TOOL_DIR) && \
+	cp $(example).elf yolo-fastest-1_1_160_person_himax.tflite $(GEN_TOOL_DIR) && \
 	cd $(GEN_TOOL_DIR) && \
-	$(GEN_TOOL_NAME) -e $(example).elf -t yolo-fastest-1.1_160_person_himax.tflite -s 1024 -o $(example).img && \
+	$(GEN_TOOL_NAME) -e $(example).elf -t yolo-fastest-1_1_160_person_himax.tflite -s 1024 -o $(example).img && \
 	cp $(example)*.img .. && \
-	rm $(example).elf $(example)*.img yolo-fastest-1.1_160_person_himax.tflite
+	rm $(example).elf $(example)*.img yolo-fastest-1_1_160_person_himax.tflite
 endif
 else
 	$(error "please specific example=")
