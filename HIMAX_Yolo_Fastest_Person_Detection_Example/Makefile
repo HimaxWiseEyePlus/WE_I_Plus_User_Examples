@@ -3,8 +3,6 @@
 #=============================================================
 #ARC_TOOLCHAIN ?= mwdt
 ARC_TOOLCHAIN ?= gnu
-YOLO_DATASET ?= coco
-#YOLO_DATASET ?= himax
 
 ifeq ($(ARC_TOOLCHAIN), mwdt)
 	CC = ccac
@@ -168,6 +166,7 @@ $(patsubst %.cc,%.o,$(patsubst %.c,%.o,$(SRCS)))
 
 yolo_OBJS:= \
 $(patsubst %.cc,%.o,$(patsubst %.c,%.o,$(yolo_SRCS)))
+
 #=============================================================
 # Applications settings
 #=============================================================
@@ -322,7 +321,7 @@ CXXFLAGS += \
 -I./third_party/arc_mli_package/include \
 -I./third_party/arc_mli_package/include/api \
 -I./tensorflow/lite/micro/tools/make/downloads/kissfft \
--DSCRATCH_MEM_Z_SIZE=0x10000 \
+-DSCRATCH_MEM_Z_SIZE=0x10000
 
 
 CCFLAGS+= \
@@ -373,11 +372,16 @@ $(SDK_PATH)/liblibtflm.a \
 
 endif # ARC_TOOLCHAIN
 
+ifeq ($(MAKECMDGOALS),yolo_coco)
+CXXFLAGS += \
+-DCOCO_DATASET
+CCFLAGS += \
+-DCOCO_DATASET
+endif
 #=============================================================
 # Common rules
 #=============================================================
-.PHONY: all yolo
-
+.PHONY: all yolo_coco yolo_himax
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) $(EXT_CFLAGS) $(INCLUDES) -c $< -o $@
 
@@ -391,11 +395,18 @@ endif # ARC_TOOLCHAIN
 all: 
 	$(error "please specific example=")
 
-yolo: MAP_NAME = yolo
-yolo: yolo.elf
+yolo_coco: MAP_NAME = yolo_coco
+yolo_coco: yolo_coco.elf
 
-yolo.elf : $(OBJS) $(yolo_OBJS)
+yolo_himax: MAP_NAME = yolo_himax
+yolo_himax: yolo_himax.elf
+
+yolo_coco.elf : $(OBJS) $(yolo_OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) $(yolo_OBJS) $(LDFLAGS)
+
+yolo_himax.elf : $(OBJS) $(yolo_OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) $(yolo_OBJS) $(LDFLAGS)
+
 clean:
 	@echo 'cleaning'
 	-@$(RM) $(OBJS) $(yolo_OBJS)
@@ -427,7 +438,7 @@ download:
 ifeq ($(ARC_TOOLCHAIN), mwdt)
 flash:
 ifdef example
-ifeq ($(YOLO_DATASET), coco)
+ifeq ($(example), yolo_coco)
 	@export PATH=$(shell pwd)/$(GEN_TOOL_DIR)/:$$PATH && \
 	cp $(example).elf $(example).map $(example).tflite $(GEN_TOOL_DIR) && \
 	cd $(GEN_TOOL_DIR) && \
@@ -435,13 +446,13 @@ ifeq ($(YOLO_DATASET), coco)
 	cp $(example)*.img .. && \
 	rm $(example).elf $(example).map $(example)*.img $(example).tflite
 
-else ifeq ($(YOLO_DATASET), himax)
+else ifeq ($(example), yolo_himax)
 	@export PATH=$(shell pwd)/$(GEN_TOOL_DIR)/:$$PATH && \
-	cp $(example).elf $(example).map yolo-fastest-1_1_160_person_himax.tflite $(GEN_TOOL_DIR) && \
+	cp $(example).elf $(example).map $(example).tflite $(GEN_TOOL_DIR) && \
 	cd $(GEN_TOOL_DIR) && \
-	$(GEN_TOOL_NAME) -e $(example).elf -t yolo-fastest-1_1_160_person_himax.tflite -m $(example).map -o $(example).img -s 1024 && \
+	$(GEN_TOOL_NAME) -e $(example).elf -t $(example).tflite -m $(example).map -o $(example).img -s 1024 && \
 	cp $(example)*.img .. && \
-	rm $(example).elf $(example).map $(example)*.img yolo-fastest-1_1_160_person_himax.tflite
+	rm $(example).elf $(example).map $(example)*.img $(example).tflite
 endif
 else
 	$(error "please specific example=")
@@ -449,20 +460,20 @@ endif
 else ifeq ($(ARC_TOOLCHAIN), gnu)
 flash:
 ifdef example
-ifeq ($(YOLO_DATASET), coco)
+ifeq ($(example), yolo_coco)
 	@export PATH=$(shell pwd)/$(GEN_TOOL_DIR)/:$$PATH && \
 	cp $(example).elf $(example).tflite $(GEN_TOOL_DIR) && \
 	cd $(GEN_TOOL_DIR) && \
 	$(GEN_TOOL_NAME) -e $(example).elf -t $(example).tflite -s 1024 -o $(example).img && \
 	cp $(example)*.img .. && \
 	rm $(example).elf $(example)*.img $(example).tflite
-else ifeq ($(YOLO_DATASET), himax)
+else ifeq ($(example), yolo_himax)
 	@export PATH=$(shell pwd)/$(GEN_TOOL_DIR)/:$$PATH && \
-	cp $(example).elf yolo-fastest-1_1_160_person_himax.tflite $(GEN_TOOL_DIR) && \
+	cp $(example).elf $(example).tflite $(GEN_TOOL_DIR) && \
 	cd $(GEN_TOOL_DIR) && \
-	$(GEN_TOOL_NAME) -e $(example).elf -t yolo-fastest-1_1_160_person_himax.tflite -s 1024 -o $(example).img && \
+	$(GEN_TOOL_NAME) -e $(example).elf -t $(example).tflite -s 1024 -o $(example).img && \
 	cp $(example)*.img .. && \
-	rm $(example).elf $(example)*.img yolo-fastest-1_1_160_person_himax.tflite
+	rm $(example).elf $(example)*.img $(example).tflite
 endif
 else
 	$(error "please specific example=")

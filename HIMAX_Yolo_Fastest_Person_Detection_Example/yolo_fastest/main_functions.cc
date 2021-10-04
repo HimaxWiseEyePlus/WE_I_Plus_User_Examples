@@ -11,7 +11,6 @@
 #include "hx_drv_tflm.h" 
 #define MAX_TRACKED_ALGO_RES  10
 #define COLOR_DEPTH	1 // 8bit per pixel FU
-#define COCO_DATASET 1
 typedef enum
 {
 	MONO_FRAME=0,
