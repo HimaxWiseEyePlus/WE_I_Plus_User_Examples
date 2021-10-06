@@ -42,6 +42,14 @@ DEPEND_LINK = https://github.com/foss-for-synopsys-dwc-arc-processors/embarc_mli
 DEPEND_LOC = third_party/
 DEPEND_NAME = gnu_dependencies.zip
 
+YOLO_COCO_LINK = https://github.com/HimaxWiseEyePlus/Yolo-Fastest/raw/master/ModelZoo/yolo-fastest-1.1_160_person/yolo-fastest-1.1_160_person.tflite
+YOLO_COCO_LOC = .
+YOLO_COCO_NAME = yolo_coco.tflite
+
+YOLO_HIMAX_LINK = https://github.com/HimaxWiseEyePlus/Yolo-Fastest/raw/master/ModelZoo/yolo-fastest-1.1_160_person/yolo-fastest-1_1_160_person_himax.tflite
+YOLO_HIMAX_LOC = .
+YOLO_HIMAX_NAME = yolo_himax.tflite
+
 GEN_TOOL_DIR = image_gen_linux
 ifeq ($(ARC_TOOLCHAIN), mwdt)
 GEN_TOOL_NAME = image_gen
@@ -415,6 +423,8 @@ clean:
 	
 download:
 	@echo 'downloading'
+	@$(DL) $(YOLO_COCO_LINK) -o $(YOLO_COCO_NAME)
+	@$(DL) $(YOLO_HIMAX_LINK) -o $(YOLO_HIMAX_NAME) 
 	@$(DL) $(TFLM_LIB_LINK)  -o $(TFLM_LIB_NAME) 
 	@$(DL) $(LIB_LINK)  -o $(LIB_NAME) 
 	@$(DL) $(SDK_LINK)  -o $(SDK_NAME)
