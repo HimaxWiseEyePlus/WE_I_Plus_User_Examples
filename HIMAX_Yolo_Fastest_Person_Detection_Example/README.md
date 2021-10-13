@@ -75,7 +75,8 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
       ```bash
       chmod 777 PC_TOOL
       ```
-
+    - Install FT4222 linux driver
+      - You can reference the user guide [here](https://github.com/HimaxWiseEyePlus/bsp_tflu/tree/master/HIMAX_WE1_EVB_user_guide#update-bootloader-version-at-linux-environment) to download and install FT4222 linux driver.
     - Click `PC_TOOL` under your folder.
 
        ![alt text](images/pc_tool.png)
