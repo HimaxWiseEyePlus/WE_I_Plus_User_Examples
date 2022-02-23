@@ -64,5 +64,7 @@ make magic_wand
 make flash example=magic_wand
 ```
 
+by this example, we directly use I2C to control imu, please search `exmaple/magic_wand/imu_lsm9ds1.c` for more detail.
+
 After flash image generated, please download the flash image file to HIMAX WE1 EVB by UART, details are described [here](https://github.com/HimaxWiseEyePlus/bsp_tflu/tree/master/HIMAX_WE1_EVB_user_guide#flash-image-update-at-linux-environment)
 
