@@ -71,15 +71,15 @@ This example shows how to deploy your own yolo-fastest tflite model to HIMAX WE-
 
 
   - You can see your detect results with bounding box on the PC TOOL.
-    - Before you click `PC_TOOL`, you can download [here](https://github.com/HimaxWiseEyePlus/WE_I_Plus_User_Examples/releases/download/v1.0/PC_TOOL), please key-in following command on console.
+    - Before you click `PC_TOOL_Linux`, you can download [here](https://github.com/HimaxWiseEyePlus/WE_I_Plus_User_Examples/releases/download/v1.0/PC_TOOL_Linux), please key-in following command on console.
       ```bash
-      chmod 777 PC_TOOL
+      chmod 777 PC_TOOL_Linux
       ```
     - Install FT4222 linux driver
       - You can reference the user guide [here](https://github.com/HimaxWiseEyePlus/bsp_tflu/tree/master/HIMAX_WE1_EVB_user_guide#update-bootloader-version-at-linux-environment) to download and install FT4222 linux driver.
-    - Click `PC_TOOL` under your folder.
+    - Click `PC_TOOL_Linux` under your folder.
 
-       ![alt text](images/pc_tool.png)
+       ![alt text](images/pc_tool_linux.png)
     - Please click `Recv` button.
       ![alt text](images/linux_pc_tool.png)
 

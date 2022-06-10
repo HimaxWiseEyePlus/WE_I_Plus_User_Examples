@@ -67,15 +67,15 @@ Please check [here](https://docs.edgeimpulse.com/docs) and [here](https://docs.e
     ![](images/console_result.png)
   - You can see your detect results with a 50*50 pixel box on the PC TOOL. Because this Edge Impulse FOMO model can detect object with only centroids [here](https://docs.edgeimpulse.com/docs/tutorials/detect-objects-using-fomo) for more detail.
 
-    - Before you click `PC_TOOL`, you can download [here](https://github.com/HimaxWiseEyePlus/WE_I_Plus_User_Examples/releases/download/v1.0/PC_TOOL), please key-in following command on console.
+    - Before you click `PC_TOOL_Linux`, you can download [here](https://github.com/HimaxWiseEyePlus/WE_I_Plus_User_Examples/releases/download/v1.0/PC_TOOL_Linux), please key-in following command on console.
       ```  
-      chmod 777 PC_TOOL
+      chmod 777 PC_TOOL_Linux
       ```
     - Install FT4222 linux driver
 
       - You can reference the user guide [here](https://github.com/HimaxWiseEyePlus/bsp_tflu/tree/master/HIMAX_WE1_EVB_user_guide#update-bootloader-version-at-linux-environment) to download and install FT4222 linux driver.
-    - Click `PC_TOOL` under your folder.
-      ![](images/pc_tool.png)
+    - Click `PC_TOOL_Linux` under your folder.
+      ![](images/pc_tool_linux.png)
     - Please click `Recv` button
       ![](images/linux_pc_tool.png)
     - Then you will see your detect results with a 50*50 pixel box.
