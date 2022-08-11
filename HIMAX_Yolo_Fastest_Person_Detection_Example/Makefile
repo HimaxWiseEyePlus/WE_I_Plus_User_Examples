@@ -25,12 +25,12 @@ LIB_LINK = https://www.himax.com.tw/we-i/himax_tflu_tree/third_party_lib_v03.zip
 LIB_LOC = third_party/
 LIB_NAME = lib.zip
 
-TFLM_LIB_LINK = https://github.com/HimaxWiseEyePlus/himax_tflm/archive/refs/tags/v1.0.zip
+TFLM_LIB_LINK = https://github.com/HimaxWiseEyePlus/himax_tflm/archive/refs/tags/v1.0.1.zip
 TFLM_LIB_LOC = .
 TFLM_LIB_NAME = tensorflow_lib.zip
-HIMAX_TFLM_LIB_LOC = himax_tflm-1.0
+HIMAX_TFLM_LIB_LOC = himax_tflm-1.0.1
 
-SDK_LINK = https://www.himax.com.tw/we-i/himax_we1_sdk_v19.zip
+SDK_LINK = https://www.himax.com.tw/we-i/himax_we1_sdk_v20.zip
 SDK_LOC = .
 SDK_NAME = sdk.zip
 
