@@ -29,7 +29,7 @@ MODEL_LINK = https://www.himax.com.tw/we-i/himax_tflu_tree/model_setting_v03.zip
 MODEL_LOC = tensorflow/lite/micro/tools/make/downloads/
 MODEL_NAME = model.zip
 
-SDK_LINK = https://www.himax.com.tw/we-i/himax_we1_sdk_v20.zip
+SDK_LINK = https://www.himax.com.tw/we-i/himax_we1_sdk_v21.zip
 SDK_LOC = .
 SDK_NAME = sdk.zip
 
@@ -147,6 +147,7 @@ CCFLAGS+= \
 -I./tensorflow/lite/micro/tools/make/downloads/kissfft
 
 LDFLAGS+= \
+-buildlib \
 $(MLI_PATH)/libmli.a \
 -Hheap=8192 \
 -Hnocopyr \
@@ -162,6 +163,7 @@ $(SDK_PATH)/liblibcommon.a \
 $(SDK_PATH)/liblibaudio.a \
 $(SDK_PATH)/liblibsecurity.a \
 $(SDK_PATH)/liblibsensordp.a \
+$(SDK_PATH)/liblibclib.a \
 $(SDK_PATH)/liblibtflm.a
 
 else ifeq ($(ARC_TOOLCHAIN), gnu)

@@ -18,7 +18,7 @@ LIB_LOC = third_party/
 LIB_NAME = lib.zip
 THIRD_PARTY_LIB_NAME = third_party_lib_v04
 
-SDK_LINK = https://www.himax.com.tw/we-i/himax_we1_sdk_v20.zip
+SDK_LINK = https://www.himax.com.tw/we-i/himax_we1_sdk_v21.zip
 SDK_LOC = .
 SDK_NAME = sdk.zip
 
@@ -279,6 +279,7 @@ $(SDK_PATH)/liblibcommon.a \
 $(SDK_PATH)/liblibaudio.a \
 $(SDK_PATH)/liblibsecurity.a \
 $(SDK_PATH)/liblibsensordp.a \
+$(SDK_PATH)/liblibclib.a \
 $(SDK_PATH)/liblibtflm.a \
 -Wl,--end-group
 

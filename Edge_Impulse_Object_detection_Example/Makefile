@@ -8,27 +8,29 @@ LD := arc-elf32-ld
 RM = rm -rf
 DL = curl -Ls -f
 UNZIP = unzip 
+CP = cp -r
 
-SDK_LINK = https://www.himax.com.tw/we-i/himax_we1_sdk_v20.zip
+SDK_LINK = https://www.himax.com.tw/we-i/himax_we1_sdk_v21.zip
 SDK_LOC = .
 SDK_NAME = sdk.zip
-
-LIB_LINK = https://www.himax.com.tw/we-i/himax_tflu_tree/third_party_lib_v03.zip
-LIB_LOC = third_party/
-LIB_NAME = lib.zip
-
-TFLM_LIB_LINK = https://github.com/HimaxWiseEyePlus/himax_tflm/archive/refs/tags/v1.0.1.zip
-TFLM_LIB_LOC = .
-TFLM_LIB_NAME = tensorflow_lib.zip
-HIMAX_TFLM_LIB_LOC = himax_tflm-1.0.1
 
 TOOL_LINK = https://www.himax.com.tw/we-i/image_gen_linux_v2_1_12.zip
 TOOL_LOC = .
 TOOL_NAME = image_gen.zip
 
 DEPEND_LINK = https://github.com/foss-for-synopsys-dwc-arc-processors/embarc_mli/releases/download/Release_1.1/mw_gnu_dependencies.zip
-DEPEND_LOC = third_party/
+DEPEND_LOC =  third_party/
 DEPEND_NAME = gnu_dependencies.zip
+
+TFLM_LIB_LINK = https://github.com/HimaxWiseEyePlus/himax_tflm/archive/refs/tags/v2.0.zip
+TFLM_LIB_LOC = .
+TFLM_LIB_NAME = tensorflow_lib.zip
+HIMAX_TFLM_LIB_LOC = himax_tflm-2.0
+
+LIB_LINK = https://www.himax.com.tw/we-i/himax_tflu_tree/third_party_lib_v04.zip
+LIB_LOC = third_party/
+LIB_NAME = lib.zip
+THIRD_PARTY_LIB_NAME = third_party_lib_v04
 
 GEN_TOOL_DIR = image_gen_linux
 ifeq ($(ARC_TOOLCHAIN), mwdt)
@@ -114,8 +116,8 @@ CXXFLAGS += \
 -I./edge-impulse-sdk/third_party/flatbuffers/include/ \
 -I./edge-impulse-sdk/third_party/gemmlowp/ \
 -I./edge-impulse-sdk/third_party/ruy/ \
--I./third_party/arc_mli_package/include/ \
--I./third_party/arc_mli_package/include/api \
+-I./edge-impulse-sdk/third_party/arc_mli_package/include/ \
+-I./edge-impulse-sdk/third_party/arc_mli_package/include/api \
 
 CCFLAGS+= \
 -mcpu=em4_fpus \
@@ -149,8 +151,8 @@ CCFLAGS+= \
 -I./edge-impulse-sdk/third_party/flatbuffers/include/ \
 -I./edge-impulse-sdk/third_party/gemmlowp/ \
 -I./edge-impulse-sdk/third_party/ruy/ \
--I./third_party/arc_mli_package/include/ \
--I./third_party/arc_mli_package/include/api \
+-I./edge-impulse-sdk/third_party/arc_mli_package/include/ \
+-I./edge-impulse-sdk/third_party/arc_mli_package/include/api \
 
 
 LDFLAGS +=  -Wl,-lmli -Wl,-lmwdepend -Wl,-marcv2elfx -Wl,-Map=memory.map -Wl,--strip-debug -Wl,--stats,--gc-sections -Wl,--cref \
@@ -166,6 +168,7 @@ $(SDK_PATH)/liblibcommon.a \
 $(SDK_PATH)/liblibaudio.a \
 $(SDK_PATH)/liblibsecurity.a \
 $(SDK_PATH)/liblibsensordp.a \
+$(SDK_PATH)/liblibclib.a \
 $(SDK_PATH)/liblibtflm.a \
 -Wl,--end-group \
 
@@ -217,24 +220,27 @@ clean:
 	-@$(RM) *.map
 download:
 	@echo 'downloading'
-	@$(DL) $(TFLM_LIB_LINK)  -o $(TFLM_LIB_NAME) 
-	@$(DL) $(LIB_LINK)  -o $(LIB_NAME) 
 	@$(DL) $(SDK_LINK)  -o $(SDK_NAME)
 	@$(DL) $(TOOL_LINK)  -o $(TOOL_NAME)
 	@$(DL) $(DEPEND_LINK)  -o $(DEPEND_NAME)
-	@$(UNZIP) -o $(TFLM_LIB_NAME) -d $(TFLM_LIB_LOC)
-	@$(UNZIP) -o $(LIB_NAME) -d $(LIB_LOC)
+	@$(DL) $(TFLM_LIB_LINK)  -o $(TFLM_LIB_NAME) 
 	@$(UNZIP) -o $(SDK_NAME) -d $(SDK_LOC) 
 	@$(UNZIP) -o $(TOOL_NAME) -d $(TOOL_LOC)	
 	@$(UNZIP) -o $(DEPEND_NAME) -d $(DEPEND_LOC)
-	cp $(HIMAX_TFLM_LIB_LOC)/memory.lcf memory.lcf
-	cp $(HIMAX_TFLM_LIB_LOC)/memory.x memory.x
-	@$(RM) $(HIMAX_TFLM_LIB_LOC)
-	@$(RM) $(TFLM_LIB_NAME)
-	@$(RM) $(LIB_NAME)
+	@$(UNZIP) -o $(TFLM_LIB_NAME) -d $(TFLM_LIB_LOC)
 	@$(RM) $(SDK_NAME)
 	@$(RM) $(TOOL_NAME)	
 	@$(RM) $(DEPEND_NAME)
+	cp -r $(HIMAX_TFLM_LIB_LOC)/tensorflow  tensorflow
+	cp $(HIMAX_TFLM_LIB_LOC)/memory.lcf memory.lcf
+	cp $(HIMAX_TFLM_LIB_LOC)/memory.x memory.x
+	@$(RM) $(HIMAX_TFLM_LIB_LOC)
+	@$(RM) $(TFLM_LIB_NAME)	
+	@$(DL) $(LIB_LINK)  -o $(LIB_NAME)  
+	@$(UNZIP) -o $(LIB_NAME)
+	cp -r $(THIRD_PARTY_LIB_NAME)/* $(LIB_LOC)
+	@$(RM) $(THIRD_PARTY_LIB_NAME)
+	@$(RM) $(LIB_NAME)
 
 flash:
 	@export PATH=$(shell pwd)/$(GEN_TOOL_DIR)/:$$PATH && \
